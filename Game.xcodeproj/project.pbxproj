@@ -12,15 +12,22 @@
 		73E7D04114D7E4F700E03A79 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E7D04014D7E4F700E03A79 /* CoreGraphics.framework */; };
 		73E7D04714D7E4F700E03A79 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D04514D7E4F700E03A79 /* InfoPlist.strings */; };
 		73E7D04914D7E4F700E03A79 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D04814D7E4F700E03A79 /* main.m */; };
-		73E7D04D14D7E4F700E03A79 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D04C14D7E4F700E03A79 /* AppDelegate.m */; };
-		73E7D05014D7E4F700E03A79 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D04E14D7E4F700E03A79 /* MainStoryboard_iPhone.storyboard */; };
-		73E7D05314D7E4F700E03A79 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D05114D7E4F700E03A79 /* MainStoryboard_iPad.storyboard */; };
-		73E7D05614D7E4F700E03A79 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D05514D7E4F700E03A79 /* ViewController.m */; };
+		73E7D04D14D7E4F700E03A79 /* GameAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D04C14D7E4F700E03A79 /* GameAppDelegate.m */; };
+		73E7D05314D7E4F700E03A79 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D05114D7E4F700E03A79 /* MainStoryboard.storyboard */; };
+		73E7D05614D7E4F700E03A79 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D05514D7E4F700E03A79 /* GameViewController.m */; };
 		73E7D05E14D7E4F800E03A79 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E7D05D14D7E4F800E03A79 /* SenTestingKit.framework */; };
 		73E7D05F14D7E4F800E03A79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E7D03C14D7E4F700E03A79 /* UIKit.framework */; };
 		73E7D06014D7E4F800E03A79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73E7D03E14D7E4F700E03A79 /* Foundation.framework */; };
 		73E7D06814D7E4F800E03A79 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D06614D7E4F800E03A79 /* InfoPlist.strings */; };
 		73E7D06B14D7E4F800E03A79 /* GameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D06A14D7E4F800E03A79 /* GameTests.m */; };
+		73E7D07614D7E72900E03A79 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07414D7E72800E03A79 /* background.png */; };
+		73E7D07714D7E72900E03A79 /* ground.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07514D7E72800E03A79 /* ground.png */; };
+		73E7D07F14D7E75E00E03A79 /* iron.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07914D7E75E00E03A79 /* iron.png */; };
+		73E7D08014D7E75E00E03A79 /* pig.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07A14D7E75E00E03A79 /* pig.png */; };
+		73E7D08114D7E75E00E03A79 /* stone.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07B14D7E75E00E03A79 /* stone.png */; };
+		73E7D08214D7E75E00E03A79 /* straw.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07C14D7E75E00E03A79 /* straw.png */; };
+		73E7D08314D7E75E00E03A79 /* wolfs.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07D14D7E75E00E03A79 /* wolfs.png */; };
+		73E7D08414D7E75E00E03A79 /* wood.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07E14D7E75E00E03A79 /* wood.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,22 +45,29 @@
 		73E7D03C14D7E4F700E03A79 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		73E7D03E14D7E4F700E03A79 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		73E7D04014D7E4F700E03A79 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		73E7D04414D7E4F700E03A79 /* Game-Info.plist */ = {isa = PBXFileReference; path = "Game-Info.plist"; sourceTree = "<group>"; };
+		73E7D04414D7E4F700E03A79 /* Game-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Game-Info.plist"; sourceTree = "<group>"; };
 		73E7D04614D7E4F700E03A79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		73E7D04814D7E4F700E03A79 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		73E7D04A14D7E4F700E03A79 /* Game-Prefix.pch */ = {isa = PBXFileReference; path = "Game-Prefix.pch"; sourceTree = "<group>"; };
-		73E7D04B14D7E4F700E03A79 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
-		73E7D04C14D7E4F700E03A79 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		73E7D04F14D7E4F700E03A79 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		73E7D05214D7E4F700E03A79 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		73E7D05414D7E4F700E03A79 /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
-		73E7D05514D7E4F700E03A79 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		73E7D04A14D7E4F700E03A79 /* Game-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game-Prefix.pch"; sourceTree = "<group>"; };
+		73E7D04B14D7E4F700E03A79 /* GameAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameAppDelegate.h; sourceTree = "<group>"; };
+		73E7D04C14D7E4F700E03A79 /* GameAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameAppDelegate.m; sourceTree = "<group>"; };
+		73E7D05214D7E4F700E03A79 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		73E7D05414D7E4F700E03A79 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		73E7D05514D7E4F700E03A79 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		73E7D05C14D7E4F800E03A79 /* GameTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		73E7D05D14D7E4F800E03A79 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		73E7D06514D7E4F800E03A79 /* GameTests-Info.plist */ = {isa = PBXFileReference; path = "GameTests-Info.plist"; sourceTree = "<group>"; };
+		73E7D06514D7E4F800E03A79 /* GameTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GameTests-Info.plist"; sourceTree = "<group>"; };
 		73E7D06714D7E4F800E03A79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		73E7D06914D7E4F800E03A79 /* GameTests.h */ = {isa = PBXFileReference; path = GameTests.h; sourceTree = "<group>"; };
+		73E7D06914D7E4F800E03A79 /* GameTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameTests.h; sourceTree = "<group>"; };
 		73E7D06A14D7E4F800E03A79 /* GameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameTests.m; sourceTree = "<group>"; };
+		73E7D07414D7E72800E03A79 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		73E7D07514D7E72800E03A79 /* ground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ground.png; sourceTree = "<group>"; };
+		73E7D07914D7E75E00E03A79 /* iron.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iron.png; sourceTree = "<group>"; };
+		73E7D07A14D7E75E00E03A79 /* pig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pig.png; sourceTree = "<group>"; };
+		73E7D07B14D7E75E00E03A79 /* stone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stone.png; sourceTree = "<group>"; };
+		73E7D07C14D7E75E00E03A79 /* straw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = straw.png; sourceTree = "<group>"; };
+		73E7D07D14D7E75E00E03A79 /* wolfs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wolfs.png; sourceTree = "<group>"; };
+		73E7D07E14D7E75E00E03A79 /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,12 +127,12 @@
 		73E7D04214D7E4F700E03A79 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				73E7D04B14D7E4F700E03A79 /* AppDelegate.h */,
-				73E7D04C14D7E4F700E03A79 /* AppDelegate.m */,
-				73E7D04E14D7E4F700E03A79 /* MainStoryboard_iPhone.storyboard */,
-				73E7D05114D7E4F700E03A79 /* MainStoryboard_iPad.storyboard */,
-				73E7D05414D7E4F700E03A79 /* ViewController.h */,
-				73E7D05514D7E4F700E03A79 /* ViewController.m */,
+				73E7D07814D7E73900E03A79 /* Images */,
+				73E7D04B14D7E4F700E03A79 /* GameAppDelegate.h */,
+				73E7D04C14D7E4F700E03A79 /* GameAppDelegate.m */,
+				73E7D05114D7E4F700E03A79 /* MainStoryboard.storyboard */,
+				73E7D05414D7E4F700E03A79 /* GameViewController.h */,
+				73E7D05514D7E4F700E03A79 /* GameViewController.m */,
 				73E7D04314D7E4F700E03A79 /* Supporting Files */,
 			);
 			path = Game;
@@ -152,6 +166,21 @@
 				73E7D06614D7E4F800E03A79 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		73E7D07814D7E73900E03A79 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				73E7D07914D7E75E00E03A79 /* iron.png */,
+				73E7D07A14D7E75E00E03A79 /* pig.png */,
+				73E7D07B14D7E75E00E03A79 /* stone.png */,
+				73E7D07C14D7E75E00E03A79 /* straw.png */,
+				73E7D07D14D7E75E00E03A79 /* wolfs.png */,
+				73E7D07E14D7E75E00E03A79 /* wood.png */,
+				73E7D07414D7E72800E03A79 /* background.png */,
+				73E7D07514D7E72800E03A79 /* ground.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,8 +254,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				73E7D04714D7E4F700E03A79 /* InfoPlist.strings in Resources */,
-				73E7D05014D7E4F700E03A79 /* MainStoryboard_iPhone.storyboard in Resources */,
-				73E7D05314D7E4F700E03A79 /* MainStoryboard_iPad.storyboard in Resources */,
+				73E7D05314D7E4F700E03A79 /* MainStoryboard.storyboard in Resources */,
+				73E7D07614D7E72900E03A79 /* background.png in Resources */,
+				73E7D07714D7E72900E03A79 /* ground.png in Resources */,
+				73E7D07F14D7E75E00E03A79 /* iron.png in Resources */,
+				73E7D08014D7E75E00E03A79 /* pig.png in Resources */,
+				73E7D08114D7E75E00E03A79 /* stone.png in Resources */,
+				73E7D08214D7E75E00E03A79 /* straw.png in Resources */,
+				73E7D08314D7E75E00E03A79 /* wolfs.png in Resources */,
+				73E7D08414D7E75E00E03A79 /* wood.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,8 +298,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				73E7D04914D7E4F700E03A79 /* main.m in Sources */,
-				73E7D04D14D7E4F700E03A79 /* AppDelegate.m in Sources */,
-				73E7D05614D7E4F700E03A79 /* ViewController.m in Sources */,
+				73E7D04D14D7E4F700E03A79 /* GameAppDelegate.m in Sources */,
+				73E7D05614D7E4F700E03A79 /* GameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,20 +330,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		73E7D04E14D7E4F700E03A79 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				73E7D04F14D7E4F700E03A79 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		73E7D05114D7E4F700E03A79 /* MainStoryboard_iPad.storyboard */ = {
+		73E7D05114D7E4F700E03A79 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				73E7D05214D7E4F700E03A79 /* en */,
 			);
-			name = MainStoryboard_iPad.storyboard;
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		73E7D06614D7E4F800E03A79 /* InfoPlist.strings */ = {
@@ -375,6 +403,7 @@
 				GCC_PREFIX_HEADER = "Game/Game-Prefix.pch";
 				INFOPLIST_FILE = "Game/Game-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -386,6 +415,7 @@
 				GCC_PREFIX_HEADER = "Game/Game-Prefix.pch";
 				INFOPLIST_FILE = "Game/Game-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
