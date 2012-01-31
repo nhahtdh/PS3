@@ -7,10 +7,42 @@
 //
 
 #import "GameViewController.h"
+#import "GameBlock.h"
+#import "GamePig.h"
+#import "GameWolf.h"
 
 @implementation ViewController
 
+@synthesize gameObjects;
 @synthesize gameArea;
+@synthesize pallete;
+@synthesize wolfImageArea;
+@synthesize mainView;
+
+
+- (id) init {
+    NSLog(@"init called.");
+    if (self = [super init]) {
+        gameObjects = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (id) initWithCoder:(NSCoder *)aDecoder {
+    NSLog(@"initWithCoder called.");
+    if (self = [super initWithCoder:aDecoder]) {
+        gameObjects = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    NSLog(@"initWithNibName called.");
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+        gameObjects = [NSMutableArray array];
+    }
+    return self;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,11 +85,38 @@
     CGFloat gameAreaHeight = backgroundHeight + groundHeight;
     CGFloat gameAreaWidth = backgroundWidth;
     [gameArea setContentSize:CGSizeMake(gameAreaWidth, gameAreaHeight)];
+    
+    [gameArea setHidden:YES];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    GameWolf* gameWolf = [storyboard instantiateViewControllerWithIdentifier:@"GameWolf"];
+    
+    [gameObjects addObject: gameWolf];
+    
+    // pallete = [[UIScrollView alloc] init];
+    
+    if ([mainView self]) {
+        NSArray *arr = [mainView subviews];
+        NSLog(@"Number of views %d\n", arr.count);
+        for (id item in arr) {
+            NSLog(@"%@", [item description]);
+        }
+    }
+    
+    if ([pallete self])
+        NSLog(@"Pallete exists");
+    [pallete addSubview: gameWolf.view];
+    [gameArea addSubview: gameWolf.view];
+    NSLog(@"%@", gameWolf.view);
 }
 
 - (void)viewDidUnload
 {
     [self setGameArea:nil];
+    [self setWolfImageArea:nil];
+    [self setPallete:nil];
+    [self setMainView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

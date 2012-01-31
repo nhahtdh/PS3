@@ -28,6 +28,10 @@
 		73E7D08214D7E75E00E03A79 /* straw.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07C14D7E75E00E03A79 /* straw.png */; };
 		73E7D08314D7E75E00E03A79 /* wolfs.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07D14D7E75E00E03A79 /* wolfs.png */; };
 		73E7D08414D7E75E00E03A79 /* wood.png in Resources */ = {isa = PBXBuildFile; fileRef = 73E7D07E14D7E75E00E03A79 /* wood.png */; };
+		73E7D0DC14D7EFD700E03A79 /* GameBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D0D514D7EFD600E03A79 /* GameBlock.m */; };
+		73E7D0DD14D7EFD700E03A79 /* GameObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D0D714D7EFD700E03A79 /* GameObject.m */; };
+		73E7D0DE14D7EFD700E03A79 /* GamePig.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D0D914D7EFD700E03A79 /* GamePig.m */; };
+		73E7D0DF14D7EFD700E03A79 /* GameWolf.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E7D0DB14D7EFD700E03A79 /* GameWolf.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,14 @@
 		73E7D07C14D7E75E00E03A79 /* straw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = straw.png; sourceTree = "<group>"; };
 		73E7D07D14D7E75E00E03A79 /* wolfs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wolfs.png; sourceTree = "<group>"; };
 		73E7D07E14D7E75E00E03A79 /* wood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood.png; sourceTree = "<group>"; };
+		73E7D0D414D7EFD600E03A79 /* GameBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBlock.h; sourceTree = "<group>"; };
+		73E7D0D514D7EFD600E03A79 /* GameBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBlock.m; sourceTree = "<group>"; };
+		73E7D0D614D7EFD700E03A79 /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
+		73E7D0D714D7EFD700E03A79 /* GameObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObject.m; sourceTree = "<group>"; };
+		73E7D0D814D7EFD700E03A79 /* GamePig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePig.h; sourceTree = "<group>"; };
+		73E7D0D914D7EFD700E03A79 /* GamePig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GamePig.m; sourceTree = "<group>"; };
+		73E7D0DA14D7EFD700E03A79 /* GameWolf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameWolf.h; sourceTree = "<group>"; };
+		73E7D0DB14D7EFD700E03A79 /* GameWolf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameWolf.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +139,14 @@
 		73E7D04214D7E4F700E03A79 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				73E7D0D614D7EFD700E03A79 /* GameObject.h */,
+				73E7D0D714D7EFD700E03A79 /* GameObject.m */,
+				73E7D0D414D7EFD600E03A79 /* GameBlock.h */,
+				73E7D0D514D7EFD600E03A79 /* GameBlock.m */,
+				73E7D0D814D7EFD700E03A79 /* GamePig.h */,
+				73E7D0D914D7EFD700E03A79 /* GamePig.m */,
+				73E7D0DA14D7EFD700E03A79 /* GameWolf.h */,
+				73E7D0DB14D7EFD700E03A79 /* GameWolf.m */,
 				73E7D07814D7E73900E03A79 /* Images */,
 				73E7D04B14D7E4F700E03A79 /* GameAppDelegate.h */,
 				73E7D04C14D7E4F700E03A79 /* GameAppDelegate.m */,
@@ -300,6 +320,10 @@
 				73E7D04914D7E4F700E03A79 /* main.m in Sources */,
 				73E7D04D14D7E4F700E03A79 /* GameAppDelegate.m in Sources */,
 				73E7D05614D7E4F700E03A79 /* GameViewController.m in Sources */,
+				73E7D0DC14D7EFD700E03A79 /* GameBlock.m in Sources */,
+				73E7D0DD14D7EFD700E03A79 /* GameObject.m in Sources */,
+				73E7D0DE14D7EFD700E03A79 /* GamePig.m in Sources */,
+				73E7D0DF14D7EFD700E03A79 /* GameWolf.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +497,7 @@
 				73E7D07014D7E4F800E03A79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		73E7D07114D7E4F800E03A79 /* Build configuration list for PBXNativeTarget "GameTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +506,7 @@
 				73E7D07314D7E4F800E03A79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

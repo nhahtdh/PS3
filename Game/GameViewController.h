@@ -12,6 +12,12 @@
 
 - (IBAction)buttonPressed:(id)sender;
 
+@property (strong, nonatomic) NSMutableArray *gameObjects;
+
 @property (strong, nonatomic) IBOutlet UIScrollView *gameArea;
+@property (weak, nonatomic) IBOutlet UIScrollView *pallete;
+@property (strong, nonatomic) IBOutlet UIImageView *wolfImageArea;
+
+@property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @end
