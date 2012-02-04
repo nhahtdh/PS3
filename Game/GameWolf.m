@@ -64,9 +64,11 @@
                                      CGImageCreateWithImageInRect([wolfImages CGImage], frameZeroBoundingBox)];
     
     // Configure the image view that contain the wolf image
-    UIImageView *wolfImageView = [[UIImageView alloc] initWithImage: wolfImagesFirstFrame];
+    // UIImageView *wolfImageView = [[UIImageView alloc] initWithImage: wolfImagesFirstFrame];
+    imageView = [[UIImageView alloc] initWithImage: wolfImagesFirstFrame];
     
-    [self.view addSubview: wolfImageView];
+    // [self.view addSubview: wolfImageView];
+    [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, wolfImagesFirstFrame.size.width, wolfImagesFirstFrame.size.height)];
     [self.view setBackgroundColor: [UIColor clearColor]];
 }

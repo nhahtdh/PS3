@@ -18,15 +18,15 @@
 @synthesize palette;
 
 - (id) init {
-    NSLog(@"init called.");
+    DLog(@"init called.");
     if (self = [super init]) {
         gameObjects = [NSMutableArray array];
     }
     return self;
 }
-
+ 
 - (id) initWithCoder:(NSCoder *)aDecoder {
-    NSLog(@"initWithCoder called.");
+    DLog(@"initWithCoder called.");
     if (self = [super initWithCoder:aDecoder]) {
         gameObjects = [NSMutableArray array];
     }
@@ -34,7 +34,7 @@
 }
 
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    NSLog(@"initWithNibName called.");
+    DLog(@"initWithNibName called.");
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         gameObjects = [NSMutableArray array];
     }
@@ -87,9 +87,6 @@
     [gameArea setContentSize:CGSizeMake(gameAreaWidth, gameAreaHeight)];
     
     // TODO: Redesign this later
-    // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    
-    // GameWolf* gameWolf = [storyboard instantiateViewControllerWithIdentifier:@"GameWolf"];
     GameWolf *gameWolf = [[GameWolf alloc] init];
     [gameObjects addObject: gameWolf];
     
@@ -106,7 +103,6 @@
      CGRectLog(wolfImage.bounds);
      */
     
-    // GamePig* gamePig = [storyboard instantiateViewControllerWithIdentifier: @"GamePig"];
     GamePig *gamePig = [[GamePig alloc] init];
     [gameObjects addObject: gamePig];
     
@@ -122,7 +118,9 @@
     [palette addSubview: gameWolf.view];
     [palette addSubview: gamePig.view];
     [palette addSubview: gameBlock.view];
-
+    
+    
+    // UIGestureRecognizer panGestureRecognizer = [UIGestureRecognizer alloc] initWithTarget:<#(id)#> action:<#(SEL)#>
 }
 
 - (void)viewDidUnload

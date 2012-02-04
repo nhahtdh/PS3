@@ -94,7 +94,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" id="9vs-bK-Zhf">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="124"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.75038213315217395" green="0.36087104156119965" blue="0.058492663402685087" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.87775985054347827" green="0.55757718564982939" blue="0.68545007860591489" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

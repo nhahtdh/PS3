@@ -30,14 +30,16 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    DLog(@"Pig viewDidLoad");
+    DLog(@"Pig viewDidLoad called.");
     
     [self.view setAutoresizesSubviews: YES];
     
     UIImage *pigImage = [UIImage imageNamed:@"pig.png"];
-    UIImageView *pigImageView = [[UIImageView alloc] initWithImage: pigImage];
+    // UIImageView *pigImageView = [[UIImageView alloc] initWithImage: pigImage];
+    imageView = [[UIImageView alloc] initWithImage: pigImage];
     
-    [self.view addSubview: pigImageView];
+    // [self.view addSubview: pigImageView];
+    [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, pigImage.size.width, pigImage.size.height)];
     [self.view setBackgroundColor: [UIColor clearColor]];
 }
