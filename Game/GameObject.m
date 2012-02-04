@@ -7,6 +7,9 @@
 @implementation GameObject
 
 @dynamic objectType;
+@dynamic canTranslate;
+@dynamic canRotate;
+@dynamic canZoom;
 
 @synthesize position;
 

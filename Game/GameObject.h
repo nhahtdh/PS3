@@ -14,6 +14,11 @@ typedef enum {kGameObjectWolf, kGameObjectPig, kGameObjectBlock} GameObjectType;
 }
 
 @property (nonatomic) CGPoint position;
+
+// TODO: Possible to use this + a game state to check whether should translate/rotate/zoom
+@property (nonatomic, readonly) BOOL canTranslate;
+@property (nonatomic, readonly) BOOL canRotate;
+@property (nonatomic, readonly) BOOL canZoom;
 @property (nonatomic, readonly) GameObjectType objectType;
 
 - (void)translate:(UIGestureRecognizer *)gesture;

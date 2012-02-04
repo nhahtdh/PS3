@@ -14,6 +14,18 @@
     return kGameObjectWolf;
 }
 
+-(BOOL) canTranslate {
+    return YES;
+}
+
+-(BOOL) canRotate {
+    return NO;
+}
+
+-(BOOL) canZoom {
+    return YES;
+}
+
 + (CGRect) getBoundingBoxAt: (NSInteger)frameNumber {
     // REQUIRE: 0 <= frameNumber < total number of frames in wolfs.png
     //          The numbering starts from top-left corner, from left-to-right,
@@ -40,31 +52,27 @@
 
 -(void) viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"Wolf loaded");
     
+    DLog(@"Wolf viewDidLoad called.");
+    
+    [self.view setAutoresizesSubviews: YES];
+
+    // Crop the image to the first frame
     UIImage *wolfImages = [UIImage imageNamed:@"wolfs.png"];
     CGRect frameZeroBoundingBox = [GameWolf getBoundingBoxAt: 0];
-    CGImageRef wolfImagesRef = CGImageCreateWithImageInRect([wolfImages CGImage], frameZeroBoundingBox);
-     
-    UIImageView *wolfImageView = [[UIImageView alloc] initWithImage: [UIImage imageWithCGImage:wolfImagesRef]];
-    // [wolfImageView setAutoresizingMask: UIViewAutoresizingFlexibleBottomMargin | UIView
-    // [wolfImageView setBackgroundColor: [UIColor redColor]];
-    /*
-    UIImageView *wolfImageView = [[UIImageView alloc] initWithImage: wolfImages];
-     */
-    // [wolfView addSubview: wolfImageView];
+    UIImage *wolfImagesFirstFrame = [UIImage imageWithCGImage:
+                                     CGImageCreateWithImageInRect([wolfImages CGImage], frameZeroBoundingBox)];
+    
+    // Configure the image view that contain the wolf image
+    UIImageView *wolfImageView = [[UIImageView alloc] initWithImage: wolfImagesFirstFrame];
+    
     [self.view addSubview: wolfImageView];
-    // [self.view setAutoresizingMask: UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin];
-    // [self.view setContentMode: UIViewContentModeTopLeft];
-    [self.view setAutoresizesSubviews: YES];
-    // [self.view setAutoresizingMask: UIViewAutoresizingNone];
-    NSLog(@"%f %f %f %f", self.view.bounds.origin.x, self.view.bounds.origin.y, self.view.bounds.size.width, self.view.bounds.size.height);
-    [self.view setBounds: CGRectMake(0, 0, wolfImageView.bounds.size.width, wolfImageView.bounds.size.height)];
-    [self.view setBackgroundColor: [UIColor orangeColor]];
-    // [self.view setAutoresizingMask: UIViewA
+    [self.view setFrame: CGRectMake(0, 0, wolfImagesFirstFrame.size.width, wolfImagesFirstFrame.size.height)];
+    [self.view setBackgroundColor: [UIColor clearColor]];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
+
 @end

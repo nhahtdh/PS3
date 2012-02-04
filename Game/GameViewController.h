@@ -8,16 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface GameViewController : UIViewController
 
 - (IBAction)buttonPressed:(id)sender;
 
 @property (strong, nonatomic) NSMutableArray *gameObjects;
 
 @property (strong, nonatomic) IBOutlet UIScrollView *gameArea;
-@property (weak, nonatomic) IBOutlet UIScrollView *pallete;
-@property (strong, nonatomic) IBOutlet UIImageView *wolfImageArea;
 
-@property (weak, nonatomic) IBOutlet UIView *mainView;
+@property (strong, nonatomic) IBOutlet UIView *palette;
+
 
 @end

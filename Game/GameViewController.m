@@ -11,14 +11,11 @@
 #import "GamePig.h"
 #import "GameWolf.h"
 
-@implementation ViewController
+@implementation GameViewController
 
 @synthesize gameObjects;
 @synthesize gameArea;
-@synthesize pallete;
-@synthesize wolfImageArea;
-@synthesize mainView;
-
+@synthesize palette;
 
 - (id) init {
     NSLog(@"init called.");
@@ -55,6 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view, typically from a nib.
     // load the images into UIImage objects
     UIImage *bgImage = [UIImage imageNamed:@"background.png"];
@@ -77,46 +75,61 @@
     // height
     background.frame = CGRectMake(0, backgroundY, backgroundWidth, backgroundHeight);
     ground.frame = CGRectMake(0, groundY, groundWidth, groundHeight);
+    
     // Add these views as subviews of the gameArea.
     [gameArea addSubview:background];
     [gameArea addSubview:ground];
+    
     // Set the content size so that gameArea is scrollable
     // otherwise it defaults to the current window size
     CGFloat gameAreaHeight = backgroundHeight + groundHeight;
     CGFloat gameAreaWidth = backgroundWidth;
     [gameArea setContentSize:CGSizeMake(gameAreaWidth, gameAreaHeight)];
     
-    [gameArea setHidden:YES];
+    // TODO: Redesign this later
+    // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    
-    GameWolf* gameWolf = [storyboard instantiateViewControllerWithIdentifier:@"GameWolf"];
-    
+    // GameWolf* gameWolf = [storyboard instantiateViewControllerWithIdentifier:@"GameWolf"];
+    GameWolf *gameWolf = [[GameWolf alloc] init];
     [gameObjects addObject: gameWolf];
     
-    // pallete = [[UIScrollView alloc] init];
+    [gameWolf.view setCenter: CGPointMake(70, 62)];
+    [gameWolf.view setTransform: CGAffineTransformMakeScale(100./225., 100./150.)];
     
-    if ([mainView self]) {
-        NSArray *arr = [mainView subviews];
-        NSLog(@"Number of views %d\n", arr.count);
-        for (id item in arr) {
-            NSLog(@"%@", [item description]);
-        }
-    }
+    /*
+     UIView *wolfImage = (UIView*) [[gameWolf.view subviews] objectAtIndex: 0];
+     DLog(@"%d", [wolfImage isMemberOfClass: [UIImageView class]]);
+     
+     CGRectLog(gameWolf.view.frame);
+     CGRectLog(gameWolf.view.bounds);
+     CGRectLog(wolfImage.frame);
+     CGRectLog(wolfImage.bounds);
+     */
     
-    if ([pallete self])
-        NSLog(@"Pallete exists");
-    [pallete addSubview: gameWolf.view];
-    [gameArea addSubview: gameWolf.view];
-    NSLog(@"%@", gameWolf.view);
+    // GamePig* gamePig = [storyboard instantiateViewControllerWithIdentifier: @"GamePig"];
+    GamePig *gamePig = [[GamePig alloc] init];
+    [gameObjects addObject: gamePig];
+    
+    [gamePig.view setCenter: CGPointMake(190, 62)];
+    [gamePig.view setTransform: CGAffineTransformMakeScale(100./55., 100./55.)];
+    
+    GameBlock *gameBlock = [[GameBlock alloc] init];
+    [gameObjects addObject: gameBlock];
+    
+    [gameBlock.view setCenter: CGPointMake(310, 62)];
+    [gameBlock.view setTransform: CGAffineTransformMakeScale(100./50., 100./50.)];
+    
+    [palette addSubview: gameWolf.view];
+    [palette addSubview: gamePig.view];
+    [palette addSubview: gameBlock.view];
+
 }
 
 - (void)viewDidUnload
 {
     [self setGameArea:nil];
-    [self setWolfImageArea:nil];
-    [self setPallete:nil];
-    [self setMainView:nil];
+    [self setPalette:nil];
+    [self setPalette:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
