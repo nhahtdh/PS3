@@ -23,7 +23,7 @@
 }
 
 -(BOOL) canZoom {
-    return YES;
+    return NO;
 }
 
 #pragma mark - View life cycle

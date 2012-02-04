@@ -1,0 +1,34 @@
+Problem 5:
+Black-box testing:
+- Test implementation of game objects:
+  * General:
+    . When the object is dragged, no other gestures on the object should be recognized
+  * On palette:
+    . Rotate the object in-place - should not be able to rotate
+    . Pinch the object in-place - should not be able to resize
+    . Tap on the object - only block should respond to this action
+      If block, then the block type should change in round-robin fashion in the order listed: straw, wood, iron, stone
+    . Drag the object and place it inside the palette - the object should bounce back to its original position on the palette and retain all its properties. This should be an idempotent and identity operation
+  * From palette to game area:
+// Define "valid position"
+    . Drag the object from the palette and place it at a valid position in the game area. The object should scale to appropriate size at least upon entering the game area and appear at the position it is dropped off
+      If wolf/pig, new object should not appear on palette.
+      If block, the block which is dragged into game area should not change block type, and a new block of straw type should appear on palette. This new block should passes all test cases defined.
+    . Drag the object from the palette and place it at an invalid position in the game area - the object should bounce back to its original position on the palette with all the states retained. This should be an idempotent and identity operation
+  * In game area:
+    . If the game object ends up at an invalid position, the game object should disappear from game area.
+      If wolf/pig, a new wolf/pig icon should appear on the palette, and the wolf/pig icon just appears should passes all the test cases defined.
+    . Tap the object - only the block should respond to this gesture.
+      If block, then the block type should change in round-robin fashion in the order listed: straw, wood, iron, stone
+    . Rotate the object - only the blocks should rotate, and the block after arbitrary rotation should be congruent to how it is before.
+// Which objects are resizable?
+    . Resize the object - it should not be possible to resize the object above or below a certain threshold, and the object after arbitrary rotation should be (mathematically) similar to how it is before.
+    . Drag the object to a valid position in the game area - the object should stick at the new position. There is no limit to the dragging path.
+      If block, the attempt to drag should not cause the block to change type.
+// Have time to do this?
+    . Rotate and resize the block at the same time - both operation should be handled simultaneously, and the block after arbitrary rotation and resize operations should be (mathematically) similar to how it is before.
+    . The object should respond immediately to the gesture (and combination of gestures, if valid), when the user touches a point inside the bound of the object image. This also implies that the game area should not scroll when user tries to drag an object.
+// Is this correct/possible?
+    . After an arbitrary number of operations on the object (and the object never ends up in an invalid position), the selectable area of the object should at most extend to all (transparent or not) pixels of the object image. This can be tested by applying rotation, resize operations, then try to drag the image starting from a position that clearly does not belong to the image - the image should not move.
+// Should I support pan + rotate + resize?
+// Define the operations that the objects should support simultaneously.

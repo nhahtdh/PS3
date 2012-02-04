@@ -43,11 +43,11 @@ NSString* const kBlockImageFileNames[] =  {@"straw.png", @"wood.png", @"iron.png
 }
 
 -(BOOL) canRotate {
-    return YES;
+    return self.kGameObjectState == kGameObjectStateOnGameArea;
 }
 
 -(BOOL) canZoom {
-    return YES;
+    return self.kGameObjectState == kGameObjectStateOnGameArea;
 }
 
 -(void) changeBlockType:(UIGestureRecognizer *)gesture {

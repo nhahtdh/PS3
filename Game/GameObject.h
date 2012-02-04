@@ -8,9 +8,13 @@
 // Constants for the three game objects to be implemented
 typedef enum {kGameObjectWolf, kGameObjectPig, kGameObjectBlock} GameObjectType;
 
-@interface GameObject : UIViewController {
+typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectState;
+
+@interface GameObject : UIViewController <UIGestureRecognizerDelegate> {
     // You might need to add state here.
     // CGPoint center;
+    GameObjectState kGameObjectState;
+    
     UIImageView* imageView;
     CGAffineTransform* transform;
 }
@@ -18,6 +22,7 @@ typedef enum {kGameObjectWolf, kGameObjectPig, kGameObjectBlock} GameObjectType;
 // @property (nonatomic) CGPoint center;
 
 // TODO: Possible to use this + a game state to check whether should translate/rotate/zoom
+@property (nonatomic, readwrite) GameObjectState kGameObjectState;
 @property (strong, nonatomic) UIImageView* imageView;
 
 @property (nonatomic, readonly) BOOL canTranslate;
@@ -41,6 +46,6 @@ typedef enum {kGameObjectWolf, kGameObjectPig, kGameObjectBlock} GameObjectType;
 // REQUIRES: game in designer mode, object in game area
 // EFFECTS: the object is scaled up/down with a pinch gesture
 
-// You will need to define more methods to complete the specification. 
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer;
 
 @end

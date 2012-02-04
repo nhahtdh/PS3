@@ -23,7 +23,7 @@
 }
 
 -(BOOL) canZoom {
-    return YES;
+    return NO;
 }
 
 + (CGRect) getBoundingBoxAt: (NSInteger)frameNumber {
