@@ -13,6 +13,9 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
     GameObjectState kGameObjectState;
     GameObjectType kGameObjectType;
     UIImageView* imageView;
+    
+    CGFloat angle;
+    CGFloat scale;
 }
 
 // TODO: Possible to use this + a game state to check whether should translate/rotate/zoom
@@ -23,6 +26,7 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
 @property (strong, nonatomic) UIImageView* imageView;
 
 @property (nonatomic, readonly) GameObjectType kGameObjectType;
+@property (nonatomic) CGFloat angle;
 
 - (void)scaleToFitWidth:(CGFloat) w height:(CGFloat) h;
 

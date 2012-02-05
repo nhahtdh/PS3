@@ -13,24 +13,27 @@
 @synthesize imageView;
 
 @dynamic kGameObjectType;
+@synthesize angle;
 
 -(id) init {
     DLog(@"GameObject init is called");
     if (self = [super init]) {
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(translate:)];
         [pan setMinimumNumberOfTouches: (NSUInteger) 1];
-        [pan setMaximumNumberOfTouches: (NSUInteger) 2];
+        [pan setMaximumNumberOfTouches: (NSUInteger) 1];
         [pan setDelegate: self];
         
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action: @selector(zoom:)];
+        [pinch setDelaysTouchesBegan: 0.1];
         [pinch setDelegate: self];
         
         UIRotationGestureRecognizer *rotation = [[UIRotationGestureRecognizer alloc] initWithTarget:self action: @selector(rotate:)];
+        [rotation setDelaysTouchesBegan: 0.1];
         [rotation setDelegate: self];
         
-        [self.view addGestureRecognizer: pan];
         [self.view addGestureRecognizer: pinch];
         [self.view addGestureRecognizer: rotation];
+        [self.view addGestureRecognizer: pan];
         
         // [self.view setExclusiveTouch: YES];
     }
@@ -69,90 +72,39 @@
 
     if ([self canTranslate]) {
         GameViewController *gameViewController = (GameViewController*) self.parentViewController;
-        assert(gesture.view == self.view);
-        assert(gameViewController != nil);
+        // assert(gesture.view == self.view);
+        // assert(gameViewController != nil);
         if ([gesture state] == UIGestureRecognizerStateBegan) {
+            // Change ref. frame of center point from superview of object to the root view
+            startingPoint = [gameViewController.view convertPoint: self.view.center fromView: self.view.superview];
+            
             // Place the object in the root view
-            // [self.view removeFromSuperview];
             [gameViewController.view addSubview: self.view];
-            // [self.view removeFromSuperview];
-            // [gameViewController.view bringSubviewToFront: self.view];
-            // [self.view removeFromSuperview];
             
             // Scale the object to default size
             [self scaleToFitWidth: self.defaultImageSize.width height: self.defaultImageSize.height];
-            
-            startingPoint = self.view.center;
         }
         
-        CGPoint delta = [gesture translationInView: gameViewController.view];
-        DLog(@"Delta: %f %f", delta.x, delta.y);
+        CGPoint delta = [gesture translationInView: self.view.superview];
+        // DLog(@"Delta: %f %f", delta.x, delta.y);
         CGPoint translatedCenter = CGPointMake(startingPoint.x + delta.x, startingPoint.y + delta.y);
-        DLog(@"Center: %f %f", translatedCenter.x, translatedCenter.y);
+        DLog(@"%@ center: %f %f", [self class], translatedCenter.x, translatedCenter.y);
         [self.view setCenter: translatedCenter];
-        // startingPoint = translatedCenter;
-        
-        if ([gesture state] == UIGestureRecognizerStateCancelled) {
-            DLog(@"WARNING: Cancelled");
-            // gesture 
-        }
-        
-        /*
-        GameViewController *gameViewController = (GameViewController*) self.parentViewController;
-        // [gameViewController.view bringSubviewToFront: gameViewController.palette];
-        // [gameViewController.view bringSubviewToFront: self.view];
-        
-        // There seems to be a bit of jittery in the implementation with translationInView
-        if ([gesture state] == UIGestureRecognizerStateBegan) {
-            // Normalize the center point to the root view
-            // startingPoint = [gameViewController.view convertPoint: self.view.center fromView: self.view];
+         
+        if ([gesture state] == UIGestureRecognizerStateEnded) {
+            CGPoint centerRelativeToGameArea = [gameViewController.gameArea convertPoint: translatedCenter fromView:gameViewController.view];
             
-            startingPoint = self.view.center;
-            // startingPoint = [gesture locationInView: gameViewController.view];
-            // [gameViewController.gameArea setScrollEnabled: NO];
-        }
-        
-        CGPoint delta = [gesture translationInView: gameViewController.view];
-        // CGPoint delta = [gesture
-        // CGPoint currentPoint = [gesture locationInView: gameViewController.view];
-        
-        CGPoint translatedCenter = CGPointMake(startingPoint.x + delta.x, startingPoint.y + delta.y);
-        // CGPoint translatedCenter = CGPointMake(self.view.center.x + currentPoint.x - startingPoint.x, 
-        //                                        self.view.center.y + currentPoint.y - startingPoint.y);
-        DLog(@"%f %f", translatedCenter.x, translatedCenter.y);
-        
-        [self.view setCenter: translatedCenter];
-        
-        // startingPoint = currentPoint;
-        DLog(@"GameViewController: %@", gameViewController);
-        CGPoint centerByPalette = [gameViewController.palette convertPoint: translatedCenter fromView: gameViewController.view];
-        // if ([gameViewController.palette pointInside: translatedCenter withEvent:nil]) {
-        if ([gameViewController.palette pointInside: centerByPalette withEvent: nil]) {
-            DLog(@"Palette point inside success: %f %f", translatedCenter.x, translatedCenter.y);
-            // [self.view setCenter: centerByPalette];
-        } else { // Point outside palette, consider it inside the scroll view
-            DLog(@"Palette point inside failed: %f %f", translatedCenter.x, translatedCenter.y);
-            // CGPoint centerByGameArea = [gameViewController.gameArea convertPoint: translatedCenter fromView:gameViewController.view];
-            // [self.view setCenter: centerByGameArea];
-            if ([self kGameObjectState] == kGameObjectStateOnPalette) {
-                CGPoint centerByGameArea = [gameViewController.gameArea convertPoint: translatedCenter fromView:self.view];
-                [self setKGameObjectState: kGameObjectStateOnGameArea];
-                [self scaleToFitWidth: self.defaultImageSize.width height:self.defaultImageSize.height];
+            if ([gameViewController.gameArea pointInside: centerRelativeToGameArea withEvent: nil]) {
+                DLog(@"Center (%f, %f) is inside game area", centerRelativeToGameArea.x, centerRelativeToGameArea.y);
                 
-                [self.view removeFromSuperview];
+                self.kGameObjectState = kGameObjectStateOnGameArea;
+                
+                // Place the object into game area and adjust the center accordingly
                 [gameViewController.gameArea addSubview: self.view];
-                
-                [gameViewController.inPlayGameObjects addObject: self];
-                [gameViewController.paletteGameObjects removeObject: self];
-                
-                // [self scaleToFitWidth:<#(CGFloat)#> height:<#(CGFloat)#>
+                [self.view setCenter: centerRelativeToGameArea];
             }
         }
         
-        if ([gesture state] == UIGestureRecognizerStateEnded || [gesture state] == UIGestureRecognizerStateCancelled) {
-            // [gameViewController.gameArea setScrollEnabled: YES];
-        }
-        */
     } else {
         DLog(@"Translation rejected");
     }
@@ -161,15 +113,38 @@
 -(void) zoom:(UIGestureRecognizer *)gesture {
     DLog(@"Pinch gesture detected on %@ object", [self class]);
     if ([self canZoom]) {
-        
+        if ([gesture state] == UIGestureRecognizerStateBegan) {
+            // gesture set
+        }
     } else {
         DLog(@"Zooming rejected on %@ object", [self class]);
     }
 }
 
--(void) rotate:(UIGestureRecognizer *)gesture {
+-(void) rotate:(UIRotationGestureRecognizer *)gesture {
+    // Buggy rotation
     DLog(@"Rotation gesture detected on %@ object", [self class]);
+    static CGFloat lastRotation;
     if ([self canRotate]) {
+        if ([gesture state] == UIGestureRecognizerStateBegan) {
+            lastRotation = 0.;
+        }
+        
+        CGFloat rotationalChange = [gesture rotation] - lastRotation;
+        self.angle += rotationalChange;
+        [self.view setTransform: CGAffineTransformRotate(self.view.transform, rotationalChange)];
+        // [self.view setBounds: CGRectMake(0, 0, 50, 80)];
+        // [self.view setFrame: CGRectMake(0, 0, 50, 80)];
+        // [self.view setTransform: CGAffineTransformMakeRotation(lastRotation)];
+       // [self.view setBounds: CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y,
+         //                                self.view.bounds.size.width * cos(self.angle) , <#CGFloat height#>)
+        lastRotation = [gesture rotation];
+        
+        if ([gesture state] == UIGestureRecognizerStateEnded) {
+            // self.angle += [gesture rotation];
+            self.angle -= floor(self.angle / M_PI / 2) * M_PI * 2;
+            DLog(@"Final angle: %f", self.angle);
+        }
         
     } else {
         DLog(@"Rotation rejected on %@ object", [self class]);
