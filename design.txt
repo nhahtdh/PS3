@@ -23,7 +23,7 @@ Black-box testing:
     . Rotate the object - only the blocks should rotate, and the block after arbitrary rotation should be congruent to how it is before.
 // Which objects are resizable?
     . Resize the object - it should not be possible to resize the object above or below a certain threshold, and the object after arbitrary rotation should be (mathematically) similar to how it is before.
-    . Drag the object to a valid position in the game area - the object should stick at the new position. There is no limit to the dragging path.
+    . Drag the object to a valid position in the game area - the object should stick at the new position. There is no limit to the dragging path. While the object is being dragged, the scroll view should not move (especially horizontal dragging).
       If block, the attempt to drag should not cause the block to change type.
 // Have time to do this?
     . Rotate and resize the block at the same time - both operation should be handled simultaneously, and the block after arbitrary rotation and resize operations should be (mathematically) similar to how it is before.

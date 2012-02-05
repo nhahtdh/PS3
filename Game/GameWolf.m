@@ -10,8 +10,16 @@
 
 @implementation GameWolf
 
--(GameObjectType) objectType {
+-(GameObjectType) kGameObjectType {
     return kGameObjectWolf;
+}
+
+- (CGSize) defaultImageSize {
+    return CGSizeMake(225, 150);
+}
+
+- (CGSize) defaultIconSize {
+    return CGSizeMake(150, 100);
 }
 
 -(BOOL) canTranslate {
@@ -70,7 +78,8 @@
     // [self.view addSubview: wolfImageView];
     [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, wolfImagesFirstFrame.size.width, wolfImagesFirstFrame.size.height)];
-    [self.view setBackgroundColor: [UIColor clearColor]];
+    // [self.view setBackgroundColor: [UIColor clearColor]];
+    [self.view setBackgroundColor: [UIColor greenColor]];
 }
 
 - (void)viewDidUnload {

@@ -22,7 +22,7 @@ NSString* const kBlockImageFileNames[] =  {@"straw.png", @"wood.png", @"iron.png
     self.kBlockType = (self.kBlockType + 1) % 4;
 }
 
--(id) init {
+- (id) init {
     if (self = [super init]) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget: self action: @selector(changeBlockType:)];
         [tap setNumberOfTapsRequired: 1];
@@ -34,36 +34,43 @@ NSString* const kBlockImageFileNames[] =  {@"straw.png", @"wood.png", @"iron.png
     return  self;
 }
 
--(GameObjectType) objectType {
+- (CGSize) defaultImageSize {
+    return CGSizeMake(30, 130);
+}
+
+- (CGSize) defaultIconSize {
+    return CGSizeMake(100, 100);
+}
+
+- (GameObjectType) kGameObjectType {
     return kGameObjectBlock;
 }
 
--(BOOL) canTranslate {
+- (BOOL) canTranslate {
     return YES;
 }
 
--(BOOL) canRotate {
+- (BOOL) canRotate {
     return self.kGameObjectState == kGameObjectStateOnGameArea;
 }
 
--(BOOL) canZoom {
+- (BOOL) canZoom {
     return self.kGameObjectState == kGameObjectStateOnGameArea;
 }
 
--(void) changeBlockType:(UIGestureRecognizer *)gesture {
-    DLog(@"Tap?");
+- (void) changeBlockType:(UIGestureRecognizer *)gesture {
+    DLog(@"Tap");
     if (![gesture isMemberOfClass: [UITapGestureRecognizer class]]) {
         DLog(@"WARNING: Something is wrong here");
     }
     
     [self setNextBlockType];
     [imageView setImage: [UIImage imageNamed: [GameBlock getBlockImageFileName:kBlockType]]];
-    // [self.view subviews
 }
 
 #pragma mark - View life cycle
 
--(void) viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     DLog(@"Block viewDidLoad called.");
     
@@ -71,13 +78,12 @@ NSString* const kBlockImageFileNames[] =  {@"straw.png", @"wood.png", @"iron.png
     
     kBlockType = kGameBlockStraw;
     UIImage *blockImage = [UIImage imageNamed: [GameBlock getBlockImageFileName: kBlockType]];
-    // UIImageView *blockImageView = [[UIImageView alloc] initWithImage:blockImage];
     imageView = [[UIImageView alloc] initWithImage:blockImage];
     
-    // [self.view addSubview: blockImageView];
     [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, blockImage.size.width, blockImage.size.height)];
-    [self.view setBackgroundColor: [UIColor clearColor]];
+    // [self.view setBackgroundColor: [UIColor clearColor]];
+    [self.view setBackgroundColor: [UIColor cyanColor]];
 }
 
 @end

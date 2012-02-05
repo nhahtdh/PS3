@@ -10,8 +10,16 @@
 
 @implementation GamePig
 
--(GameObjectType) objectType {
+-(GameObjectType) kGameObjectType {
     return kGameObjectPig;
+}
+
+- (CGSize) defaultImageSize {
+    return CGSizeMake(88, 88);
+}
+
+- (CGSize) defaultIconSize {
+    return CGSizeMake(100, 100);
 }
 
 -(BOOL) canTranslate {

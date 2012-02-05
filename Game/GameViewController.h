@@ -12,11 +12,12 @@
 
 - (IBAction)buttonPressed:(id)sender;
 
-@property (strong, nonatomic) NSMutableArray *gameObjects;
+- (IBAction)resetButtonPressed:(id)sender;
 
+@property (strong, nonatomic) NSMutableArray *inPlayGameObjects;
 @property (strong, nonatomic) IBOutlet UIScrollView *gameArea;
 
+@property (strong, nonatomic) NSMutableArray *paletteGameObjects;
 @property (strong, nonatomic) IBOutlet UIView *palette;
-
 
 @end

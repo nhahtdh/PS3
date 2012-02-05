@@ -13,10 +13,13 @@
 
 @implementation GameViewController
 
-@synthesize gameObjects;
+@synthesize inPlayGameObjects;
 @synthesize gameArea;
-@synthesize palette;
 
+@synthesize palette;
+@synthesize paletteGameObjects;
+
+/*
 - (id) init {
     DLog(@"init called.");
     if (self = [super init]) {
@@ -40,6 +43,8 @@
     }
     return self;
 }
+ 
+ */
 
 - (void)didReceiveMemoryWarning
 {
@@ -47,13 +52,45 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)setUpPalette {
+    // TODO: Redesign this later
+    CGPoint center = CGPointMake(20, palette.bounds.size.height / 2);
     
-    // Do any additional setup after loading the view, typically from a nib.
+    // Add Wolf icon to the palette
+    GameWolf *gameWolf = [[GameWolf alloc] init];
+    [self addChildViewController: gameWolf]; // Not sure whether this is OK or not...
+    [paletteGameObjects addObject: gameWolf];
+    
+    [gameWolf.view setCenter: CGPointMake(center.x + gameWolf.defaultIconSize.width / 2, center.y)];
+    [gameWolf scaleToFitWidth: gameWolf.defaultIconSize.width height: gameWolf.defaultIconSize.height];
+    center = CGPointMake(center.x + gameWolf.defaultIconSize.width + 20, center.y);
+    
+    // Add Pig icon to the palette
+    GamePig *gamePig = [[GamePig alloc] init];
+    [self addChildViewController: gamePig];
+    [paletteGameObjects addObject: gamePig];
+    
+    [gamePig.view setCenter: CGPointMake(center.x + gamePig.defaultIconSize.width / 2, center.y)];
+    [gamePig scaleToFitWidth: 100. height: 100.];
+    center = CGPointMake(center.x + gamePig.defaultIconSize.width + 20, center.y);
+    
+    // Add Block icon to the palette
+    GameBlock *gameBlock = [[GameBlock alloc] init];
+    [self addChildViewController: gameBlock];
+    [paletteGameObjects addObject: gameBlock];
+    
+    [gameBlock.view setCenter:CGPointMake(center.x + gameBlock.defaultIconSize.width / 2, center.y)];
+    [gameBlock scaleToFitWidth: 100. height:100.];
+    
+    [palette addSubview: gameWolf.view];
+    [palette addSubview: gamePig.view];
+    [palette addSubview: gameBlock.view];
+    
+    // [palette setExclusiveTouch: YES];
+}
+
+- (void) setUpGameArea {
     // load the images into UIImage objects
     UIImage *bgImage = [UIImage imageNamed:@"background.png"];
     UIImage *groundImage = [UIImage imageNamed:@"ground.png"];
@@ -85,46 +122,26 @@
     CGFloat gameAreaHeight = backgroundHeight + groundHeight;
     CGFloat gameAreaWidth = backgroundWidth;
     [gameArea setContentSize:CGSizeMake(gameAreaWidth, gameAreaHeight)];
+}
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    DLog(@"viewDidLoad called");
+    [super viewDidLoad];
+    // Do any additional setup after loading the view
     
-    // TODO: Redesign this later
-    GameWolf *gameWolf = [[GameWolf alloc] init];
-    [gameObjects addObject: gameWolf];
+    inPlayGameObjects = [NSMutableArray array];
+    paletteGameObjects = [NSMutableArray array];
     
-    [gameWolf.view setCenter: CGPointMake(70, 62)];
-    [gameWolf.view setTransform: CGAffineTransformMakeScale(100./225., 100./150.)];
-    
-    /*
-     UIView *wolfImage = (UIView*) [[gameWolf.view subviews] objectAtIndex: 0];
-     DLog(@"%d", [wolfImage isMemberOfClass: [UIImageView class]]);
-     
-     CGRectLog(gameWolf.view.frame);
-     CGRectLog(gameWolf.view.bounds);
-     CGRectLog(wolfImage.frame);
-     CGRectLog(wolfImage.bounds);
-     */
-    
-    GamePig *gamePig = [[GamePig alloc] init];
-    [gameObjects addObject: gamePig];
-    
-    [gamePig.view setCenter: CGPointMake(190, 62)];
-    [gamePig.view setTransform: CGAffineTransformMakeScale(100./55., 100./55.)];
-    
-    GameBlock *gameBlock = [[GameBlock alloc] init];
-    [gameObjects addObject: gameBlock];
-    
-    [gameBlock.view setCenter: CGPointMake(310, 62)];
-    [gameBlock.view setTransform: CGAffineTransformMakeScale(100./50., 100./50.)];
-    
-    [palette addSubview: gameWolf.view];
-    [palette addSubview: gamePig.view];
-    [palette addSubview: gameBlock.view];
-    
-    
-    // UIGestureRecognizer panGestureRecognizer = [UIGestureRecognizer alloc] initWithTarget:<#(id)#> action:<#(SEL)#>
+    [self setUpGameArea];
+    [self setUpPalette];
 }
 
 - (void)viewDidUnload
 {
+    DLog(@"viewDidUnload called");
     [self setGameArea:nil];
     [self setPalette:nil];
     [self setPalette:nil];
@@ -174,4 +191,21 @@
     }
     [button setTitleColor:newColor forState:UIControlStateNormal];
 }
+
+- (IBAction)resetButtonPressed:(id)sender {
+    // Clean up all items in the palette and the game area
+    for (GameObject* o in inPlayGameObjects) {
+        [o.view removeFromSuperview]; 
+    }
+    inPlayGameObjects = [NSMutableArray array];
+    
+    for (GameObject* o in paletteGameObjects) {
+        [o.view removeFromSuperview];
+    }
+    paletteGameObjects = [NSMutableArray array];
+    
+    [self setUpGameArea];
+    [self setUpPalette];
+}
+
 @end
