@@ -16,6 +16,9 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
     
     CGFloat angle;
     CGFloat scale;
+    
+    CGPoint __startingPosition;
+    CGFloat __previousRotation;
 }
 
 // TODO: Possible to use this + a game state to check whether should translate/rotate/zoom
@@ -28,7 +31,7 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
 @property (nonatomic, readonly) GameObjectType kGameObjectType;
 @property (nonatomic) CGFloat angle;
 
-- (void)scaleToFitWidth:(CGFloat) w height:(CGFloat) h;
+- (void)resizeBaseWidth:(CGFloat) w height:(CGFloat) h;
 
 - (BOOL)canTranslate;
 

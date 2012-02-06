@@ -16,8 +16,8 @@
 @synthesize inPlayGameObjects;
 @synthesize gameArea;
 
-@synthesize palette;
 @synthesize paletteGameObjects;
+@synthesize palette;
 
 /*
 - (id) init {
@@ -62,8 +62,8 @@
     [self addChildViewController: gameWolf]; // Not sure whether this is OK or not...
     [paletteGameObjects addObject: gameWolf];
     
+    [gameWolf resizeBaseWidth: gameWolf.defaultIconSize.width height: gameWolf.defaultIconSize.height];
     [gameWolf.view setCenter: CGPointMake(center.x + gameWolf.defaultIconSize.width / 2, center.y)];
-    [gameWolf scaleToFitWidth: gameWolf.defaultIconSize.width height: gameWolf.defaultIconSize.height];
     center = CGPointMake(center.x + gameWolf.defaultIconSize.width + 20, center.y);
     
     // Add Pig icon to the palette
@@ -71,8 +71,8 @@
     [self addChildViewController: gamePig];
     [paletteGameObjects addObject: gamePig];
     
+    [gamePig resizeBaseWidth: 100. height: 100.];
     [gamePig.view setCenter: CGPointMake(center.x + gamePig.defaultIconSize.width / 2, center.y)];
-    [gamePig scaleToFitWidth: 100. height: 100.];
     center = CGPointMake(center.x + gamePig.defaultIconSize.width + 20, center.y);
     
     // Add Block icon to the palette
@@ -80,8 +80,8 @@
     [self addChildViewController: gameBlock];
     [paletteGameObjects addObject: gameBlock];
     
+    [gameBlock resizeBaseWidth: 100. height:100.];
     [gameBlock.view setCenter:CGPointMake(center.x + gameBlock.defaultIconSize.width / 2, center.y)];
-    [gameBlock scaleToFitWidth: 100. height:100.];
     
     [palette addSubview: gameWolf.view];
     [palette addSubview: gamePig.view];
