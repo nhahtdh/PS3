@@ -59,6 +59,7 @@
     //          Note that the function only checks the arrays containing the game
     //          objects. It will not check the view of the game objects.
     int wolfCount = 0, pigCount = 0;
+    int blockCount = 0;
     BOOL blockInPalette = NO;
     
     @synchronized (gameObjectsInPalette) {
@@ -72,6 +73,7 @@
                     break;
                 case kGameObjectBlock:
                     blockInPalette = YES;
+                    blockCount++;
                     break;
                 default:
                     @throw [NSException exceptionWithName: NSInternalInconsistencyException
@@ -79,6 +81,10 @@
             } 
         }
     }
+    
+    DLog(@"Palette: %dW %dP %dB %@", wolfCount, pigCount, blockCount, blockInPalette ? @"YES" : @"NO");
+    
+    assert(blockCount == 1);
     
     @synchronized (gameObjectsInGameArea) {
         for (GameObject* o in gameObjectsInGameArea) {
@@ -90,6 +96,7 @@
                     pigCount++;
                     break;
                 case kGameObjectBlock:
+                    blockCount++;
                     break;
                 default:
                     @throw [NSException exceptionWithName: NSInternalInconsistencyException
@@ -98,36 +105,16 @@
         }
     }
     
-    DLog(@"%d %d %@", wolfCount, pigCount, blockInPalette ? @"YES" : @"NO");
+    DLog(@"Both: %dW %dP %dB %@", wolfCount, pigCount, blockCount, blockInPalette ? @"YES" : @"NO");
     
     assert(wolfCount == 1);
     assert(pigCount == 1);
     assert(blockInPalette);
 }
 
-/*
-- (void)addNewGameObjectToPalette: (GameObjectType) kGameObjectType {
-    GameObject* gameObject = [GameObject GameObjectCreate:kGameObjectType];
-    
-    [gameObject resetToPaletteIcon];
-    // [gameObject resizeBaseWidth: gameObject.defaultIconSize.width height: gameObject.defaultIconSize.height];
-    
-    // [paletteGameObjects addObject: gameObject];
-    @synchronized (gameObjectsInPalette) {
-        [gameObjectsInPalette addObject: gameObject];
-    }
-    
-    [self addChildViewController: gameObject];
-}
- */
-
 - (void) addGameObjectToPalette:(GameObject *)gameObject {
-    // GameObject* gameObject = [GameObject GameObjectCreate:kGameObjectType];
-    
     [gameObject resetToPaletteIcon];
-    // [gameObject resizeBaseWidth: gameObject.defaultIconSize.width height: gameObject.defaultIconSize.height];
     
-    // [paletteGameObjects addObject: gameObject];
     @synchronized (gameObjectsInPalette) {
         [gameObjectsInPalette addObject: gameObject];
     }
@@ -150,7 +137,7 @@
 
 - (void)removeGameObjectFromGameArea:(GameObject *)gameObject {
     @synchronized (gameObjectsInGameArea) {
-        [gameObjectsInGameArea removeObject: self];
+        [gameObjectsInGameArea removeObject: gameObject];
     }
 }
 
@@ -173,7 +160,7 @@
     
     @synchronized (gameObjectsInPalette) {
         for (GameObject* object in gameObjectsInPalette) {
-            if ([object kGameObjectState] == kGameObjectStateOnPalette) {
+            if (object.kGameObjectState == kGameObjectStateOnPalette) {
                 [object.view setCenter: CGPointMake(center.x + object.defaultIconSize.width / 2, center.y)];
                 [palette addSubview: object.view];
                 
@@ -302,6 +289,7 @@
 
 - (IBAction)resetButtonPressed:(id)sender {
     DLog(@"Level builder is reset");
+    
     // Clean up all items in the palette and the game area
     @synchronized(gameObjectsInPalette) {
         for (GameObject* o in gameObjectsInPalette) {
@@ -314,16 +302,10 @@
             [o.view removeFromSuperview];
         }
     }
-    // inPlayGameObjects = [NSMutableArray array];
+    
     gameObjectsInGameArea = [NSMutableArray array];
     gameObjectsInPalette = [NSMutableArray array];
-    /*
-    for (GameObject* o in paletteGameObjects) {
-        [o.view removeFromSuperview];
-    }
-     */
-    // paletteGameObjects = [NSMutableArray array];
-    
+
     [self setUpGameArea];
     [self setUpPalette];
 }

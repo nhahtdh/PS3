@@ -10,7 +10,7 @@
 
 @implementation GameObject
 
-@synthesize kGameObjectState;
+@synthesize kGameObjectState = kGameObjectState_;
 @dynamic defaultImageSize;
 @dynamic defaultIconSize;
 @synthesize imageView;
@@ -80,8 +80,13 @@
 }
 
 - (void) resetToPaletteIcon {
-    // self.kGameObjectState = kGameObjectStateOnPalette;
-    kGameObjectState = kGameObjectStateOnPalette;
+    // EFFECTS: This method will reset all the scaling and rotation of the object,
+    //          set its size to the default icon size and set its state to be on
+    //          the palette.
+    // USAGE: This function is to be called to reset the object back to initial
+    //        state. It is expected that the game object is added to the palette
+    //        after this function is called.
+    kGameObjectState_ = kGameObjectStateOnPalette;
     [self resize: self.defaultIconSize];
     [self.view setTransform: CGAffineTransformIdentity];
     self.angle = 0.0;
@@ -118,10 +123,10 @@
             // Place the object in the root view
             [gameViewController.view addSubview: self.view];
             
-            // Scale the object to default size if from the palette
+            // Scale the object to default size and set state if from the palette
             if ([self kGameObjectState] == kGameObjectStateOnPalette) {
                 [self resizeDefault];
-                kGameObjectState = kGameObjectStateTransitFromPalette;
+                kGameObjectState_ = kGameObjectStateTransitFromPalette;
             }
         }
         
@@ -129,6 +134,7 @@
         // DLog(@"Delta: %f %f", delta.x, delta.y);
         CGPoint translatedCenter = CGPointMake(__startingPosition.x + delta.x, __startingPosition.y + delta.y);
         DLog(@"%@ center: %f %f", [self class], translatedCenter.x, translatedCenter.y);
+        DLog(@"%@ state: %d", self, self.kGameObjectState);
         [self.view setCenter: translatedCenter];
          
         if ([gesture state] == UIGestureRecognizerStateEnded) {
@@ -147,19 +153,38 @@
                     if (self.kGameObjectType == kGameObjectBlock) {
                         [gameViewController addGameObjectToPalette: [GameObject GameObjectCreate: kGameObjectBlock]];
                     }
+                    kGameObjectState_ = kGameObjectStateOnGameArea;
+                    [gameViewController redrawPalette];
                 }
-                
-                kGameObjectState = kGameObjectStateOnGameArea;
-                
-                [gameViewController redrawPalette];
-            } else {
-                
+            } 
+            else {
+                switch (self.kGameObjectState) {
+                    case kGameObjectStateTransitFromPalette:
+                        kGameObjectState_ = kGameObjectStateOnPalette;
+                        [self resetToPaletteIcon];
+                        [gameViewController redrawPalette];
+                        break;
+                    case kGameObjectStateOnGameArea:
+                        if (self.kGameObjectType == kGameObjectPig || self.kGameObjectType == kGameObjectWolf) {
+                            [gameViewController addGameObjectToPalette: self];
+                            [gameViewController removeGameObjectFromGameArea: self];
+                            [gameViewController redrawPalette];
+                        } else if (self.kGameObjectType == kGameObjectBlock) {
+                            [self removeFromParentViewController];
+                            [self.view removeFromSuperview];
+                            [gameViewController removeGameObjectFromGameArea: self];
+                        }
+                        break;
+                    case kGameObjectStateOnPalette:
+                        @throw [NSException exceptionWithName: NSInternalInconsistencyException
+                                                       reason: @"Impossible state for a moving object" userInfo:nil];
+                }
             }
         } else if ([gesture state] == UIGestureRecognizerStateCancelled) {
-            DLog(@"WARNING: Gesture cancelled on %@ with state %d", self, kGameObjectState);
+            DLog(@"WARNING: Gesture cancelled on %@ with state %d", self, self.kGameObjectState);
             /*
-            if (kGameObjectState == kGameObjectStateTransitFromPalette) {
-                kGameObjectState = kGameObjectStateOnPalette;
+            if (self.kGameObjectState == kGameObjectStateTransitFromPalette) {
+                kGameObjectState_ = kGameObjectStateOnPalette;
                 [self.view setCenter: [gameViewController.palette convertPoint: __startingPosition
                                                                       fromView: gameViewController.view]];
                 [gameViewController redrawPalette];

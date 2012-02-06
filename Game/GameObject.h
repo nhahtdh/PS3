@@ -11,7 +11,6 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateTransitFromPalette,  kG
 
 @interface GameObject : UIViewController <UIGestureRecognizerDelegate> {
     GameObjectState kGameObjectState;
-    GameObjectType kGameObjectType;
     UIImageView* imageView;
     
     CGFloat angle;
@@ -35,7 +34,6 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateTransitFromPalette,  kG
 
 + (GameObject*)GameObjectCreate: (GameObjectType) kGameObjectType;
 
-// - (void)resizeBaseWidth:(CGFloat) w height:(CGFloat) h;
 - (void)resetToPaletteIcon;
 
 - (void)resizeDefault;
