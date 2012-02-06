@@ -33,7 +33,7 @@
 }
 
 -(id) init {
-    DLog(@"GameObject init is called");
+    DLog(@"GameObject init is called: %@", self);
     if (self = [super init]) {
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget: self action: @selector(translate:)];
         [pan setMinimumNumberOfTouches: (NSUInteger) 1];
@@ -41,11 +41,11 @@
         [pan setDelegate: self];
         
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action: @selector(zoom:)];
-        [pinch setDelaysTouchesBegan: 0.1];
+        [pinch setDelaysTouchesBegan: 0.3];
         [pinch setDelegate: self];
         
         UIRotationGestureRecognizer *rotation = [[UIRotationGestureRecognizer alloc] initWithTarget:self action: @selector(rotate:)];
-        [rotation setDelaysTouchesBegan: 0.1];
+        [rotation setDelaysTouchesBegan: 0.3];
         [rotation setDelegate: self];
         
         [self.view addGestureRecognizer: pinch];
@@ -68,10 +68,28 @@
     return self;
 }
 
--(void) resizeBaseWidth:(CGFloat)w height:(CGFloat)h {
-    // [self.view setTransform: CGAffineTransformScale(self.view.transform, w / self.view.frame.size.width, h / self.view.frame.size.height)];
-    [self.imageView setFrame: CGRectMake(self.imageView.frame.origin.x, self.imageView.frame.origin.y, w, h)];
-    [self.view setFrame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, w, h)];
+-(void) resize:(CGSize)sizes {
+    [self.imageView setFrame: CGRectMake(self.imageView.frame.origin.x, 
+                                         self.imageView.frame.origin.y,
+                                         sizes.width,
+                                         sizes.height)];
+    [self.view setFrame: CGRectMake(self.view.frame.origin.x,
+                                    self.view.frame.origin.y,
+                                    sizes.width,
+                                    sizes.height)];
+}
+
+- (void) resetToPaletteIcon {
+    // self.kGameObjectState = kGameObjectStateOnPalette;
+    kGameObjectState = kGameObjectStateOnPalette;
+    [self resize: self.defaultIconSize];
+    [self.view setTransform: CGAffineTransformIdentity];
+    self.angle = 0.0;
+    scale_ = 1.0;
+}
+
+- (void) resizeDefault {
+    [self resize: self.defaultImageSize];
 }
 
 -(BOOL) canTranslate {
@@ -87,7 +105,7 @@
 }
 
 -(void) translate:(UIPanGestureRecognizer *)gesture {
-    DLog(@"Pan gesture detected on %@ object", [self class]);
+    DLog(@"Pan gesture detected on %@", self);
     
     if ([self canTranslate]) {
         GameViewController *gameViewController = (GameViewController*) self.parentViewController;
@@ -102,7 +120,8 @@
             
             // Scale the object to default size if from the palette
             if ([self kGameObjectState] == kGameObjectStateOnPalette) {
-                [self resizeBaseWidth: self.defaultImageSize.width height: self.defaultImageSize.height];
+                [self resizeDefault];
+                kGameObjectState = kGameObjectStateTransitFromPalette;
             }
         }
         
@@ -118,17 +137,36 @@
             if ([gameViewController.gameArea pointInside: centerRelativeToGameArea withEvent: nil]) {
                 DLog(@"Center (%f, %f) is inside game area", centerRelativeToGameArea.x, centerRelativeToGameArea.y);
                 
-                self.kGameObjectState = kGameObjectStateOnGameArea;
-                
                 // Place the object into game area and adjust the center accordingly
                 [gameViewController.gameArea addSubview: self.view];
                 [self.view setCenter: centerRelativeToGameArea];
+                
+                if (self.kGameObjectState == kGameObjectStateTransitFromPalette) {
+                    [gameViewController addGameObjectToGameArea: self];
+                    [gameViewController removeGameObjectFromPalette: self];
+                    if (self.kGameObjectType == kGameObjectBlock) {
+                        [gameViewController addGameObjectToPalette: [GameObject GameObjectCreate: kGameObjectBlock]];
+                    }
+                }
+                
+                kGameObjectState = kGameObjectStateOnGameArea;
+                
+                [gameViewController redrawPalette];
+            } else {
+                
             }
-        }
-        
-        if ([gesture state] == UIGestureRecognizerStateCancelled ||
-            [gesture state] == UIGestureRecognizerStateFailed) {
-            DLog(@"WARNING: Gesture failed or cancelled");
+        } else if ([gesture state] == UIGestureRecognizerStateCancelled) {
+            DLog(@"WARNING: Gesture cancelled on %@ with state %d", self, kGameObjectState);
+            /*
+            if (kGameObjectState == kGameObjectStateTransitFromPalette) {
+                kGameObjectState = kGameObjectStateOnPalette;
+                [self.view setCenter: [gameViewController.palette convertPoint: __startingPosition
+                                                                      fromView: gameViewController.view]];
+                [gameViewController redrawPalette];
+            } else {
+                
+            }
+             */
         }
         
     } else {

@@ -7,7 +7,7 @@
 
 typedef enum {kGameObjectWolf, kGameObjectPig, kGameObjectBlock} GameObjectType;
 
-typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectState;
+typedef enum {kGameObjectStateOnPalette, kGameObjectStateTransitFromPalette,  kGameObjectStateOnGameArea} GameObjectState;
 
 @interface GameObject : UIViewController <UIGestureRecognizerDelegate> {
     GameObjectState kGameObjectState;
@@ -23,11 +23,11 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
 }
 
 // TODO: Possible to use this + a game state to check whether should translate/rotate/zoom
-@property (nonatomic, readwrite) GameObjectState kGameObjectState;
+@property (nonatomic, readonly) GameObjectState kGameObjectState;
 
 @property (nonatomic, readonly) CGSize defaultImageSize;
 @property (nonatomic, readonly) CGSize defaultIconSize;
-@property (strong, nonatomic) UIImageView* imageView;
+@property (strong, nonatomic, readonly) UIImageView* imageView;
 
 @property (nonatomic, readonly) GameObjectType kGameObjectType;
 @property (nonatomic) CGFloat angle;
@@ -35,7 +35,10 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
 
 + (GameObject*)GameObjectCreate: (GameObjectType) kGameObjectType;
 
-- (void)resizeBaseWidth:(CGFloat) w height:(CGFloat) h;
+// - (void)resizeBaseWidth:(CGFloat) w height:(CGFloat) h;
+- (void)resetToPaletteIcon;
+
+- (void)resizeDefault;
 
 - (BOOL)canTranslate;
 
@@ -58,7 +61,5 @@ typedef enum {kGameObjectStateOnPalette, kGameObjectStateOnGameArea} GameObjectS
 // MODIFIES: object model (size)
 // REQUIRES: game in designer mode, object in game area
 // EFFECTS: the object is scaled up/down with a pinch gesture
-
-- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer;
 
 @end
