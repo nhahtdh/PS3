@@ -3,6 +3,9 @@
 // 
 
 #import "GameObject.h"
+#import "GameWolf.h"
+#import "GamePig.h"
+#import "GameBlock.h"
 #import "GameViewController.h"
 
 @implementation GameObject
@@ -14,6 +17,20 @@
 
 @dynamic kGameObjectType;
 @synthesize angle;
+@synthesize scale = scale_;
+
++ (GameObject*) GameObjectCreate:(GameObjectType)kGameObjectType {
+    switch (kGameObjectType) {
+        case kGameObjectWolf:
+            return [[GameWolf alloc] init];
+        case kGameObjectPig:
+            return [[GamePig alloc] init];
+        case kGameObjectBlock:
+            return [[GameBlock alloc] init];
+        default:
+            return nil;
+    }
+}
 
 -(id) init {
     DLog(@"GameObject init is called");
@@ -35,8 +52,8 @@
         [self.view addGestureRecognizer: rotation];
         [self.view addGestureRecognizer: pan];
         
-        // [self.view setExclusiveTouch: YES];
-        // [self.view setAutoresizesSubviews: YES];
+        self.angle = 0.0;
+        scale_ = 1.0;
     }
     
     return self;
@@ -109,17 +126,39 @@
             }
         }
         
+        if ([gesture state] == UIGestureRecognizerStateCancelled ||
+            [gesture state] == UIGestureRecognizerStateFailed) {
+            DLog(@"WARNING: Gesture failed or cancelled");
+        }
+        
     } else {
         DLog(@"Translation rejected");
     }
 }
 
--(void) zoom:(UIGestureRecognizer *)gesture {
+-(void) zoom:(UIPinchGestureRecognizer *)gesture {
     DLog(@"Pinch gesture detected on %@ object", [self class]);
     if ([self canZoom]) {
-        // if ([gesture state] == UIGestureRecognizerStateBegan) {
-            // gesture set
-        // }
+        DLog(@"Scale: %f", [gesture scale]);
+        if ([gesture state] == UIGestureRecognizerStateBegan) {
+            __previousScale = 1.0;
+        }
+        
+        CGFloat scaleStep = [gesture scale] / __previousScale;
+        [self.view setTransform: CGAffineTransformScale(self.view.transform, scaleStep, scaleStep)];
+        
+        __previousScale = [gesture scale];
+        
+        if ([gesture state] == UIGestureRecognizerStateEnded) {
+            scale_ *= [gesture scale];
+            DLog(@"Final scale: %f", scale_);
+        }
+        
+        
+        if ([gesture state] == UIGestureRecognizerStateCancelled ||
+            [gesture state] == UIGestureRecognizerStateFailed) {
+            DLog(@"WARNING: Gesture failed or cancelled");
+        }
     } else {
         DLog(@"Zooming rejected on %@ object", [self class]);
     }
@@ -129,7 +168,7 @@
     DLog(@"Rotation gesture detected on %@ object", [self class]);
     if ([self canRotate]) {
         if ([gesture state] == UIGestureRecognizerStateBegan) {
-            __previousRotation = 0.;
+            __previousRotation = 0.0;
         }
         
         CGFloat rotationalChange = [gesture rotation] - __previousRotation;
@@ -145,6 +184,11 @@
             
             DLog(@"Delta: %f", [gesture rotation]);
             DLog(@"Final angle: %f", self.angle / M_PI * 180);
+        }
+        
+        if ([gesture state] == UIGestureRecognizerStateCancelled ||
+            [gesture state] == UIGestureRecognizerStateFailed) {
+            DLog(@"WARNING: Gesture failed or cancelled");
         }
         
     } else {

@@ -82,8 +82,7 @@ NSString* const kBlockImageFileNames[] =  {@"straw.png", @"wood.png", @"iron.png
     
     [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, blockImage.size.width, blockImage.size.height)];
-    // [self.view setBackgroundColor: [UIColor clearColor]];
-    [self.view setBackgroundColor: [UIColor cyanColor]];
+    [self.view setBackgroundColor: [UIColor clearColor]];
 }
 
 @end

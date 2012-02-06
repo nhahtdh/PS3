@@ -78,8 +78,7 @@
     // [self.view addSubview: wolfImageView];
     [self.view addSubview: imageView];
     [self.view setFrame: CGRectMake(0, 0, wolfImagesFirstFrame.size.width, wolfImagesFirstFrame.size.height)];
-    // [self.view setBackgroundColor: [UIColor clearColor]];
-    [self.view setBackgroundColor: [UIColor greenColor]];
+    [self.view setBackgroundColor: [UIColor clearColor]];
 }
 
 - (void)viewDidUnload {

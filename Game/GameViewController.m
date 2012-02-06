@@ -52,9 +52,39 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)addGameObjectToPalette: (GameObjectType) kGameObjectType {
+    GameObject* gameObject = [GameObject GameObjectCreate:kGameObjectType];
+    
+    [gameObject resizeBaseWidth: gameObject.defaultIconSize.width height: gameObject.defaultIconSize.height];
+     
+    [self addChildViewController: gameObject];
+    [paletteGameObjects addObject: gameObject];
+}
+
+- (void)redrawPalette {
+    for (UIView *subview in palette.subviews) {
+        [subview removeFromSuperview];
+    }
+        
+    CGFloat padding = 20.;
+    CGPoint center = CGPointMake(padding, palette.bounds.size.height / 2);
+    
+    for (GameObject* object in paletteGameObjects) {
+        [object.view setCenter: CGPointMake(center.x + object.defaultIconSize.width / 2, center.y)];
+        [palette addSubview: object.view];
+        
+        center = CGPointMake(center.x + object.defaultIconSize.width + padding, center.y);
+    }
+}
 
 - (void)setUpPalette {
+    [self addGameObjectToPalette: kGameObjectWolf];
+    [self addGameObjectToPalette: kGameObjectPig];
+    [self addGameObjectToPalette: kGameObjectBlock];
+    
+    [self redrawPalette];
     // TODO: Redesign this later
+    /*
     CGPoint center = CGPointMake(20, palette.bounds.size.height / 2);
     
     // Add Wolf icon to the palette
@@ -88,6 +118,7 @@
     [palette addSubview: gameBlock.view];
     
     // [palette setExclusiveTouch: YES];
+     */
 }
 
 - (void) setUpGameArea {
